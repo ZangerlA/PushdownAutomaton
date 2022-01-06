@@ -22,6 +22,7 @@ public class PushDownAutomaton implements PDA {
         this.startSymbol = startSymbol;
         this.rules = rules;
     }
+
     @Override
     public void setNumStates(int numStates) throws IllegalArgumentException {
         if (numStates <= 0) {
