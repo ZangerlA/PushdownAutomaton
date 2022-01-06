@@ -35,6 +35,11 @@ public class PushDownAutomaton implements PDA {
         if (numStates == null) {
             throw new IllegalStateException("numStates must be set first.");
         }
+        // This should be correct.
+        if (!StatesAreInBoundaries(Set.of(initialState))) {
+            throw new IllegalArgumentException("Number of states can't be 0 or less and the state for initialState does not exist.");
+        }
+        // Typo in interface ?
         if (numStates <= 0 || initialState >= numStates) {
             throw new IllegalArgumentException("Number of states can't be 0 or less and the state for initialState does not exist.");
         }
@@ -64,25 +69,25 @@ public class PushDownAutomaton implements PDA {
 
     @Override
     public void addTransition(int fromState, Character charReadTape, Character charReadStack, Character charWriteStack, int toState) throws IllegalArgumentException, IllegalStateException {
+        if (!alphabetAndNumberOfStatesAreNotNull()) {
+            throw new IllegalStateException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
+        }
         if (!StatesAreInBoundaries(Set.of(fromState, toState)) ||
                 !inputAlphabet.contains(charReadTape) ||
                 !stackAlphabet.contains(charReadStack) ||
                 !stackAlphabet.contains(charWriteStack)) {
             throw new IllegalArgumentException("States or characters in this transition are not valid.");
         }
-        if (!alphabetAndNumberOfStatesAreNotNull()) {
-            throw new IllegalStateException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
-        }
         transitions.add(new Transition(fromState, charReadTape, charReadStack, charWriteStack, toState));
     }
 
     @Override
     public boolean accepts(String input) throws IllegalArgumentException, IllegalStateException {
-        if (!inputAlphabetContainsInputString(input)) {
-            throw new IllegalArgumentException("input contains illegal character");
-        }
         if (!alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalStateException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
+        }
+        if (!inputAlphabetContainsInputString(input)) {
+            throw new IllegalArgumentException("input contains illegal character");
         }
         //TODO
         return false;
