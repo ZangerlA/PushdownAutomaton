@@ -84,6 +84,7 @@ public class PushDownAutomaton implements PDA {
         if (!alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalStateException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
         }
+        //TODO
         return false;
     }
 
@@ -95,6 +96,7 @@ public class PushDownAutomaton implements PDA {
         if (!((PushDownAutomaton) pda).alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalArgumentException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
         }
+        //TODO
         return null;
     }
 
@@ -106,6 +108,7 @@ public class PushDownAutomaton implements PDA {
         if (!((PushDownAutomaton) pda).alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalArgumentException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
         }
+        //TODO
         return null;
     }
 
@@ -114,6 +117,7 @@ public class PushDownAutomaton implements PDA {
         if (!alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalStateException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
         }
+        //TODO
         return false;
     }
 
