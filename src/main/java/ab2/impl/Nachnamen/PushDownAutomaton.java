@@ -2,6 +2,7 @@ package ab2.impl.Nachnamen;
 
 import ab2.PDA;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class PushDownAutomaton implements PDA {
@@ -79,7 +80,7 @@ public class PushDownAutomaton implements PDA {
                 !stackAlphabet.contains(charWriteStack)) {
             throw new IllegalArgumentException("States or characters in this transition are not valid.");
         }
-        transitions.add(new Transition(fromState, charReadTape, charReadStack, charWriteStack, toState));
+        this.transitions.add(new Transition(fromState, charReadTape, charReadStack, charWriteStack, toState));
     }
 
     @Override
@@ -114,8 +115,68 @@ public class PushDownAutomaton implements PDA {
         if (!((PushDownAutomaton) pda).alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalArgumentException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
         }
-        //TODO
-        return null;
+
+        PushDownAutomaton unionPDA = new PushDownAutomaton();
+        unionPDA.setStatesAndAlphabetUnionPDA(this, pda);
+        unionPDA.setTransitionsUnionPDA(this, pda);
+
+        return unionPDA;
+    }
+
+    private void setStatesAndAlphabetUnionPDA(PDA pda1, PDA pda2) {
+        Set<Character> inputAlphabet = new HashSet<>();
+        Set<Character> stackAlphabet = new HashSet<>();
+        Set<Integer> acceptingStates = new HashSet<>();
+
+        inputAlphabet.addAll(((PushDownAutomaton)pda1).inputAlphabet);
+        inputAlphabet.addAll(((PushDownAutomaton)pda2).inputAlphabet);
+        stackAlphabet.addAll(((PushDownAutomaton)pda1).stackAlphabet);
+        stackAlphabet.addAll(((PushDownAutomaton)pda2).stackAlphabet);
+        acceptingStates.addAll(calculateAcceptingStates(0, pda1));
+        acceptingStates.addAll(calculateAcceptingStates(((PushDownAutomaton)pda2).numStates, pda2));
+
+        this.setNumStates(((PushDownAutomaton)pda1).numStates + ((PushDownAutomaton)pda2).numStates + 1);
+        this.setInitialState(0);
+        this.setInputChars(inputAlphabet);
+        this.setStackChars(stackAlphabet);
+        this.setAcceptingState(acceptingStates);
+    }
+
+    private void setTransitionsUnionPDA(PDA pda1, PDA pda2) {
+        int offset = ((PushDownAutomaton)pda2).numStates;
+
+        this.addTransition(0, null, null, null, 1);
+        this.addTransition(0, null, null, null, offset + 1);
+
+        for (Transition t : ((PushDownAutomaton)pda1).transitions) {
+            this.addTransition(
+                    t.getFromState() + 1,
+                    t.getCharReadTape(),
+                    t.getCharReadStack(),
+                    t.getCharWriteStack(),
+                    t.getToState() + 1
+            );
+        }
+
+        for (Transition t : ((PushDownAutomaton)pda2).transitions) {
+            this.addTransition(
+                    t.getFromState() + offset + 1,
+                    t.getCharReadTape(),
+                    t.getCharReadStack(),
+                    t.getCharWriteStack(),
+                    t.getToState() + offset + 1
+            );
+        }
+    }
+
+    private Set<Integer> calculateAcceptingStates(int offset, PDA pda) {
+        Set<Integer> resultStates = new HashSet<>();
+
+        for(Integer state : ((PushDownAutomaton)pda).acceptingStates) {
+            resultStates.add(state + offset + 1);
+        }
+
+        return resultStates;
     }
 
     @Override
