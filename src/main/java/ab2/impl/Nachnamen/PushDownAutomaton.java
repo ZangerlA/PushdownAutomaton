@@ -109,7 +109,9 @@ public class PushDownAutomaton implements PDA {
             if (stack.size() != 0) {
                 return false;
             }
-            return this.acceptingStates.contains(currentState);
+            if (this.acceptingStates.contains(currentState)) {
+                return true;
+            }
         }
 
         for (Transition transition : this.transitions) {
