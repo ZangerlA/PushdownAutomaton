@@ -2,6 +2,9 @@ package ab2.impl.Nachnamen;
 
 import ab2.PDA;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class PushDownAutomaton implements PDA {
@@ -16,11 +19,13 @@ public class PushDownAutomaton implements PDA {
     private Set<Transition> transitions;
 
     public PushDownAutomaton() {
+        this.transitions = new HashSet<>();
     }
 
     public PushDownAutomaton(char startSymbol, Set<String> rules) {
         this.startSymbol = startSymbol;
         this.rules = rules;
+        this.transitions = new HashSet<>();
     }
 
     @Override
@@ -37,7 +42,7 @@ public class PushDownAutomaton implements PDA {
             throw new IllegalStateException("numStates must be set first.");
         }
         // This should be correct.
-        if (!StatesAreInBoundaries(Set.of(initialState))) {
+        if (!statesAreInBoundaries(Set.of(initialState))) {
             throw new IllegalArgumentException("Number of states can't be 0 or less and the state for initialState does not exist.");
         }
         // Typo in interface ?
@@ -52,7 +57,7 @@ public class PushDownAutomaton implements PDA {
         if (numStates == null) {
             throw new IllegalStateException("numStates must be set first.");
         }
-        if (!StatesAreInBoundaries(acceptingStates)) {
+        if (!statesAreInBoundaries(acceptingStates)) {
             throw new IllegalArgumentException("One of the states in acceptingStates is outside of boundaries.");
         }
         this.acceptingStates = acceptingStates;
@@ -73,10 +78,10 @@ public class PushDownAutomaton implements PDA {
         if (!alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalStateException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
         }
-        if (!StatesAreInBoundaries(Set.of(fromState, toState)) ||
-                !inputAlphabet.contains(charReadTape) ||
-                !stackAlphabet.contains(charReadStack) ||
-                !stackAlphabet.contains(charWriteStack)) {
+        if (!statesAreInBoundaries(fromState == toState ? Set.of(fromState) : Set.of(fromState, toState)) ||
+                !inputAlphabet.contains(charReadTape) && charReadTape != null ||
+                !stackAlphabet.contains(charReadStack) && charReadStack != null ||
+                !stackAlphabet.contains(charWriteStack) && charWriteStack != null) {
             throw new IllegalArgumentException("States or characters in this transition are not valid.");
         }
         transitions.add(new Transition(fromState, charReadTape, charReadStack, charWriteStack, toState));
@@ -91,6 +96,31 @@ public class PushDownAutomaton implements PDA {
             throw new IllegalArgumentException("input contains illegal character");
         }
         //TODO
+        List<Character> stack = new ArrayList<>();
+        return doStep(input, this.initialState, stack);
+    }
+
+    private boolean doStep(String input, int currentState, List<Character> stack) {
+        if (currentState < 0 || currentState >= this.numStates) {
+            throw new IllegalArgumentException();
+        }
+
+        if (this.acceptingStates.contains(currentState) && input.equals("") && stack.size() == 0) {
+            return true;
+        } else if (stack.size() != 0 && input.equals("")) {
+            return false;
+        }
+
+        for (Transition transition : this.transitions) {
+            if (transition.getFromState() == currentState && (transition.getCharReadTape() == input.charAt(0) || transition.getCharReadTape() == null) && ((stack.size() > 0 && transition.getCharReadStack() == stack.get(stack.size() - 1)) || transition.getCharReadStack() == null)) {
+                List<Character> tempStack = new ArrayList<>(stack);
+                if (transition.getCharReadStack() != null) tempStack.remove(tempStack.size() - 1);
+                if (transition.getCharWriteStack() != null) tempStack.add(transition.getCharWriteStack());
+                if (doStep(input.substring(1), transition.getToState(), tempStack)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -127,8 +157,8 @@ public class PushDownAutomaton implements PDA {
         return false;
     }
 
-    private boolean StatesAreInBoundaries(Set<Integer> states) {
-        for(Integer state : states) {
+    private boolean statesAreInBoundaries(Set<Integer> states) {
+        for (Integer state : states) {
             if (state < 0 || state >= numStates) {
                 return false;
             }
