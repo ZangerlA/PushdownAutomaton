@@ -117,7 +117,7 @@ public class PushDownAutomaton implements PDA {
                 List<Character> tempStack = new ArrayList<>(stack);
                 if (transition.getCharReadStack() != null) tempStack.remove(tempStack.size() - 1);
                 if (transition.getCharWriteStack() != null) tempStack.add(transition.getCharWriteStack());
-                if (doStep(input.substring(1), transition.getToState(), tempStack)) {
+                if (doStep(transition.getCharReadTape() == null ? input : input.substring(1), transition.getToState(), tempStack)) {
                     return true;
                 }
             }
@@ -240,11 +240,33 @@ public class PushDownAutomaton implements PDA {
         if (!alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalStateException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
         }
-        //TODO
+        findEpsilonTransition(this.initialState, new ArrayList<>());
         return false;
     }
 
+    private boolean findEpsilonTransition(int currentState, List<Character> stack) {
+        if (currentState < 0 || currentState >= this.numStates) {
+            throw new IllegalArgumentException();
+        }
 
+        int transitionCounter = 0;
+
+        for (Transition transition : this.transitions) {
+            if (transition.getFromState() == currentState && ((stack.size() > 0 && transition.getCharReadStack() == stack.get(stack.size() - 1)) || transition.getCharReadStack() == null)) {
+                transitionCounter++;
+                List<Character> tempStack = new ArrayList<>(stack);
+                if (transition.getCharReadStack() != null) tempStack.remove(tempStack.size() - 1);
+                if (transition.getCharWriteStack() != null) tempStack.add(transition.getCharWriteStack());
+                if (transition.getCharReadTape() == null) {
+                    return false;
+                }
+                if (findEpsilonTransition(transition.getToState(), tempStack)) {
+                    return true;
+                };
+            }
+        }
+        return transitionCounter <= 1;
+    }
 
     private boolean statesAreInBoundaries(Set<Integer> states) {
         for (Integer state : states) {
