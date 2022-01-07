@@ -132,8 +132,34 @@ public class PushDownAutomaton implements PDA {
         if (!((PushDownAutomaton) pda).alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalArgumentException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
         }
-        //TODO
-        return null;
+        Set<Integer> newAcceptingStates = this.acceptingStates;
+        Set<Character> newInputAlpha = this.inputAlphabet;
+        Set<Character> newStackAlpha = this.stackAlphabet;
+
+        PushDownAutomaton newPda = new PushDownAutomaton();
+        newPda.setNumStates(this.numStates + ((PushDownAutomaton) pda).numStates);
+        newPda.setInitialState(0);
+
+        for (Integer accnew: ((PushDownAutomaton) pda).acceptingStates) {
+            newAcceptingStates.add(accnew + this.numStates);
+        }
+        newPda.setAcceptingState(newAcceptingStates);
+
+        newInputAlpha.addAll(((PushDownAutomaton) pda).inputAlphabet);
+        newPda.setInputChars(newInputAlpha);
+
+        newStackAlpha.addAll(((PushDownAutomaton) pda).stackAlphabet);
+        newPda.setStackChars(newStackAlpha);
+
+        newPda.addTransition(this.numStates - 1,null,null,null,this.numStates);
+        for (Transition trans: this.transitions) {
+            newPda.addTransition(trans.getFromState(),trans.getCharReadTape(),trans.getCharReadStack(),trans.getCharWriteStack(),trans.getToState());
+        }
+        for (Transition transi: ((PushDownAutomaton) pda).transitions) {
+            newPda.addTransition(transi.getFromState() + this.numStates,transi.getCharReadTape(),transi.getCharReadStack(),transi.getCharWriteStack(),transi.getToState() + this.numStates);
+        }
+
+        return newPda;
     }
 
     @Override
