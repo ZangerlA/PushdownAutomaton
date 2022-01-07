@@ -105,14 +105,15 @@ public class PushDownAutomaton implements PDA {
             throw new IllegalArgumentException();
         }
 
-        if (this.acceptingStates.contains(currentState) && input.equals("") && stack.size() == 0) {
-            return true;
-        } else if (stack.size() != 0 && input.equals("")) {
-            return false;
+        if (input.equals("")) {
+            if (stack.size() != 0) {
+                return false;
+            }
+            return this.acceptingStates.contains(currentState);
         }
 
         for (Transition transition : this.transitions) {
-            if (transition.getFromState() == currentState && (transition.getCharReadTape() == input.charAt(0) || transition.getCharReadTape() == null) && ((stack.size() > 0 && transition.getCharReadStack() == stack.get(stack.size() - 1)) || transition.getCharReadStack() == null)) {
+            if (transition.getFromState() == currentState && (transition.getCharReadTape() == null || transition.getCharReadTape() == input.charAt(0)) && ((stack.size() > 0 && transition.getCharReadStack() == stack.get(stack.size() - 1)) || transition.getCharReadStack() == null)) {
                 List<Character> tempStack = new ArrayList<>(stack);
                 if (transition.getCharReadStack() != null) tempStack.remove(tempStack.size() - 1);
                 if (transition.getCharWriteStack() != null) tempStack.add(transition.getCharWriteStack());
@@ -188,7 +189,7 @@ public class PushDownAutomaton implements PDA {
         stackAlphabet.addAll(((PushDownAutomaton)pda1).stackAlphabet);
         stackAlphabet.addAll(((PushDownAutomaton)pda2).stackAlphabet);
         acceptingStates.addAll(calculateAcceptingStates(0, pda1));
-        acceptingStates.addAll(calculateAcceptingStates(((PushDownAutomaton)pda2).numStates, pda2));
+        acceptingStates.addAll(calculateAcceptingStates(((PushDownAutomaton)pda1).numStates, pda2));
 
         this.setNumStates(((PushDownAutomaton)pda1).numStates + ((PushDownAutomaton)pda2).numStates + 1);
         this.setInitialState(0);
@@ -198,7 +199,7 @@ public class PushDownAutomaton implements PDA {
     }
 
     private void setTransitionsUnionPDA(PDA pda1, PDA pda2) {
-        int offset = ((PushDownAutomaton)pda2).numStates;
+        int offset = ((PushDownAutomaton)pda1).numStates;
 
         this.addTransition(0, null, null, null, 1);
         this.addTransition(0, null, null, null, offset + 1);
@@ -242,6 +243,8 @@ public class PushDownAutomaton implements PDA {
         //TODO
         return false;
     }
+
+
 
     private boolean statesAreInBoundaries(Set<Integer> states) {
         for (Integer state : states) {
