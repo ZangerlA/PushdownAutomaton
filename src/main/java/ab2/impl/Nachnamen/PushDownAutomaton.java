@@ -141,7 +141,7 @@ public class PushDownAutomaton implements PDA {
         newPda.setNumStates(this.numStates + ((PushDownAutomaton) pda).numStates);
         newPda.setInitialState(0);
 
-        for (Integer accnew: ((PushDownAutomaton) pda).acceptingStates) {
+        for (Integer accnew : ((PushDownAutomaton) pda).acceptingStates) {
             newAcceptingStates.add(accnew + this.numStates);
         }
         newPda.setAcceptingState(newAcceptingStates);
@@ -152,12 +152,12 @@ public class PushDownAutomaton implements PDA {
         newStackAlpha.addAll(((PushDownAutomaton) pda).stackAlphabet);
         newPda.setStackChars(newStackAlpha);
 
-        newPda.addTransition(this.numStates - 1,null,null,null,this.numStates);
-        for (Transition trans: this.transitions) {
-            newPda.addTransition(trans.getFromState(),trans.getCharReadTape(),trans.getCharReadStack(),trans.getCharWriteStack(),trans.getToState());
+        newPda.addTransition(this.numStates - 1, null, null, null, this.numStates);
+        for (Transition trans : this.transitions) {
+            newPda.addTransition(trans.getFromState(), trans.getCharReadTape(), trans.getCharReadStack(), trans.getCharWriteStack(), trans.getToState());
         }
-        for (Transition transi: ((PushDownAutomaton) pda).transitions) {
-            newPda.addTransition(transi.getFromState() + this.numStates,transi.getCharReadTape(),transi.getCharReadStack(),transi.getCharWriteStack(),transi.getToState() + this.numStates);
+        for (Transition transi : ((PushDownAutomaton) pda).transitions) {
+            newPda.addTransition(transi.getFromState() + this.numStates, transi.getCharReadTape(), transi.getCharReadStack(), transi.getCharWriteStack(), transi.getToState() + this.numStates);
         }
 
         return newPda;
@@ -184,14 +184,14 @@ public class PushDownAutomaton implements PDA {
         Set<Character> stackAlphabet = new HashSet<>();
         Set<Integer> acceptingStates = new HashSet<>();
 
-        inputAlphabet.addAll(((PushDownAutomaton)pda1).inputAlphabet);
-        inputAlphabet.addAll(((PushDownAutomaton)pda2).inputAlphabet);
-        stackAlphabet.addAll(((PushDownAutomaton)pda1).stackAlphabet);
-        stackAlphabet.addAll(((PushDownAutomaton)pda2).stackAlphabet);
+        inputAlphabet.addAll(((PushDownAutomaton) pda1).inputAlphabet);
+        inputAlphabet.addAll(((PushDownAutomaton) pda2).inputAlphabet);
+        stackAlphabet.addAll(((PushDownAutomaton) pda1).stackAlphabet);
+        stackAlphabet.addAll(((PushDownAutomaton) pda2).stackAlphabet);
         acceptingStates.addAll(calculateAcceptingStates(0, pda1));
-        acceptingStates.addAll(calculateAcceptingStates(((PushDownAutomaton)pda1).numStates, pda2));
+        acceptingStates.addAll(calculateAcceptingStates(((PushDownAutomaton) pda1).numStates, pda2));
 
-        this.setNumStates(((PushDownAutomaton)pda1).numStates + ((PushDownAutomaton)pda2).numStates + 1);
+        this.setNumStates(((PushDownAutomaton) pda1).numStates + ((PushDownAutomaton) pda2).numStates + 1);
         this.setInitialState(0);
         this.setInputChars(inputAlphabet);
         this.setStackChars(stackAlphabet);
@@ -199,12 +199,12 @@ public class PushDownAutomaton implements PDA {
     }
 
     private void setTransitionsUnionPDA(PDA pda1, PDA pda2) {
-        int offset = ((PushDownAutomaton)pda1).numStates;
+        int offset = ((PushDownAutomaton) pda1).numStates;
 
         this.addTransition(0, null, null, null, 1);
         this.addTransition(0, null, null, null, offset + 1);
 
-        for (Transition t : ((PushDownAutomaton)pda1).transitions) {
+        for (Transition t : ((PushDownAutomaton) pda1).transitions) {
             this.addTransition(
                     t.getFromState() + 1,
                     t.getCharReadTape(),
@@ -214,7 +214,7 @@ public class PushDownAutomaton implements PDA {
             );
         }
 
-        for (Transition t : ((PushDownAutomaton)pda2).transitions) {
+        for (Transition t : ((PushDownAutomaton) pda2).transitions) {
             this.addTransition(
                     t.getFromState() + offset + 1,
                     t.getCharReadTape(),
@@ -228,7 +228,7 @@ public class PushDownAutomaton implements PDA {
     private Set<Integer> calculateAcceptingStates(int offset, PDA pda) {
         Set<Integer> resultStates = new HashSet<>();
 
-        for(Integer state : ((PushDownAutomaton)pda).acceptingStates) {
+        for (Integer state : ((PushDownAutomaton) pda).acceptingStates) {
             resultStates.add(state + offset + 1);
         }
 
@@ -240,32 +240,19 @@ public class PushDownAutomaton implements PDA {
         if (!alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalStateException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
         }
-        findEpsilonTransition(this.initialState, new ArrayList<>());
-        return false;
-    }
-
-    private boolean findEpsilonTransition(int currentState, List<Character> stack) {
-        if (currentState < 0 || currentState >= this.numStates) {
-            throw new IllegalArgumentException();
-        }
-
-        int transitionCounter = 0;
-
         for (Transition transition : this.transitions) {
-            if (transition.getFromState() == currentState && ((stack.size() > 0 && transition.getCharReadStack() == stack.get(stack.size() - 1)) || transition.getCharReadStack() == null)) {
-                transitionCounter++;
-                List<Character> tempStack = new ArrayList<>(stack);
-                if (transition.getCharReadStack() != null) tempStack.remove(tempStack.size() - 1);
-                if (transition.getCharWriteStack() != null) tempStack.add(transition.getCharWriteStack());
-                if (transition.getCharReadTape() == null) {
-                    return false;
+            if (transition.getCharReadTape() == null) return false;
+        }
+        for (int s = 0; s < this.numStates; s++) {
+            for (Character c : this.inputAlphabet) {
+                int counter = 0;
+                for (Transition transition : this.transitions) {
+                    if (transition.getCharReadTape() == c && transition.getFromState() == s) counter++;
                 }
-                if (findEpsilonTransition(transition.getToState(), tempStack)) {
-                    return true;
-                };
+                if (counter > 1) return false;
             }
         }
-        return transitionCounter <= 1;
+        return true;
     }
 
     private boolean statesAreInBoundaries(Set<Integer> states) {
