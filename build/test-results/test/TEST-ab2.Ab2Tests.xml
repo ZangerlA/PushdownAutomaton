@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ab2.Ab2Tests" tests="27" skipped="0" failures="27" errors="0" timestamp="2021-12-28T12:49:21" hostname="MAYONAISSE" time="0.029">
+<testsuite name="ab2.Ab2Tests" tests="27" skipped="0" failures="27" errors="0" timestamp="2022-01-13T18:00:07" hostname="DESKTOP-HRROTV7" time="0.048">
   <properties/>
-  <testcase name="testPDATransitionStackWriteCharNotValid()" classname="ab2.Ab2Tests" time="0.012">
+  <testcase name="testPDATransitionStackWriteCharNotValid()" classname="ab2.Ab2Tests" time="0.019">
     <failure message="org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalArgumentException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalArgumentException&gt; but was: &lt;java.lang.NullPointerException&gt;
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
@@ -96,7 +96,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	... 86 more
 </failure>
   </testcase>
-  <testcase name="testPDAUnion1()" classname="ab2.Ab2Tests" time="0.001">
+  <testcase name="testPDAUnion1()" classname="ab2.Ab2Tests" time="0.0">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null
 	at ab2.Ab2Tests.pda1(Ab2Tests.java:35)
 	at ab2.Ab2Tests.testPDAUnion1(Ab2Tests.java:325)
@@ -185,7 +185,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testPDAUnion2()" classname="ab2.Ab2Tests" time="0.001">
+  <testcase name="testPDAUnion2()" classname="ab2.Ab2Tests" time="0.0">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null
 	at ab2.Ab2Tests.pda1(Ab2Tests.java:35)
 	at ab2.Ab2Tests.testPDAUnion2(Ab2Tests.java:349)
@@ -452,7 +452,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testPDAAppend1()" classname="ab2.Ab2Tests" time="0.0">
+  <testcase name="testPDAAppend1()" classname="ab2.Ab2Tests" time="0.001">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null
 	at ab2.Ab2Tests.pda1(Ab2Tests.java:35)
 	at ab2.Ab2Tests.testPDAAppend1(Ab2Tests.java:416)
@@ -541,7 +541,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testPDAAppend2()" classname="ab2.Ab2Tests" time="0.0">
+  <testcase name="testPDAAppend2()" classname="ab2.Ab2Tests" time="0.001">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null
 	at ab2.Ab2Tests.pda1(Ab2Tests.java:35)
 	at ab2.Ab2Tests.testPDAAppend2(Ab2Tests.java:439)
@@ -630,7 +630,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testPDAAppend3()" classname="ab2.Ab2Tests" time="0.001">
+  <testcase name="testPDAAppend3()" classname="ab2.Ab2Tests" time="0.0">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null
 	at ab2.Ab2Tests.pda1(Ab2Tests.java:35)
 	at ab2.Ab2Tests.testPDAAppend3(Ab2Tests.java:460)
@@ -808,7 +808,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testPDATransitionNoInputChars()" classname="ab2.Ab2Tests" time="0.001">
+  <testcase name="testPDATransitionNoInputChars()" classname="ab2.Ab2Tests" time="0.0">
     <failure message="org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalStateException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalStateException&gt; but was: &lt;java.lang.NullPointerException&gt;
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
@@ -998,7 +998,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	... 86 more
 </failure>
   </testcase>
-  <testcase name="testPDATransitionNoStackChars()" classname="ab2.Ab2Tests" time="0.0">
+  <testcase name="testPDATransitionNoStackChars()" classname="ab2.Ab2Tests" time="0.001">
     <failure message="org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalStateException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalStateException&gt; but was: &lt;java.lang.NullPointerException&gt;
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
@@ -1093,7 +1093,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	... 86 more
 </failure>
   </testcase>
-  <testcase name="testPDANumStates1()" classname="ab2.Ab2Tests" time="0.0">
+  <testcase name="testPDANumStates1()" classname="ab2.Ab2Tests" time="0.001">
     <failure message="org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalArgumentException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalArgumentException&gt; but was: &lt;java.lang.NullPointerException&gt;
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
@@ -1372,7 +1372,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testPDAAccepts2()" classname="ab2.Ab2Tests" time="0.0">
+  <testcase name="testPDAAccepts2()" classname="ab2.Ab2Tests" time="0.001">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null
 	at ab2.Ab2Tests.pda2(Ab2Tests.java:49)
 	at ab2.Ab2Tests.testPDAAccepts2(Ab2Tests.java:272)
@@ -1550,7 +1550,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testPDAAccepts4()" classname="ab2.Ab2Tests" time="0.001">
+  <testcase name="testPDAAccepts4()" classname="ab2.Ab2Tests" time="0.0">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null
 	at ab2.Ab2Tests.pda4(Ab2Tests.java:91)
 	at ab2.Ab2Tests.testPDAAccepts4(Ab2Tests.java:302)
@@ -1639,7 +1639,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testPDAInitStateNotValid1()" classname="ab2.Ab2Tests" time="0.0">
+  <testcase name="testPDAInitStateNotValid1()" classname="ab2.Ab2Tests" time="0.001">
     <failure message="org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalArgumentException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalArgumentException&gt; but was: &lt;java.lang.NullPointerException&gt;
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
@@ -2005,7 +2005,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testPDATransitionInputCharNotValid()" classname="ab2.Ab2Tests" time="0.001">
+  <testcase name="testPDATransitionInputCharNotValid()" classname="ab2.Ab2Tests" time="0.0">
     <failure message="org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalArgumentException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalArgumentException&gt; but was: &lt;java.lang.NullPointerException&gt;
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
@@ -2100,7 +2100,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumSta
 	... 86 more
 </failure>
   </testcase>
-  <testcase name="testPDAInitStateNoStates()" classname="ab2.Ab2Tests" time="0.0">
+  <testcase name="testPDAInitStateNoStates()" classname="ab2.Ab2Tests" time="0.001">
     <failure message="org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalStateException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalStateException&gt; but was: &lt;java.lang.NullPointerException&gt;
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
@@ -2195,7 +2195,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setInitia
 	... 86 more
 </failure>
   </testcase>
-  <testcase name="testPDADet()" classname="ab2.Ab2Tests" time="0.0">
+  <testcase name="testPDADet()" classname="ab2.Ab2Tests" time="0.001">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setNumStates(int)&quot; because &quot;m&quot; is null
 	at ab2.Ab2Tests.pda1(Ab2Tests.java:35)
 	at ab2.Ab2Tests.testPDADet(Ab2Tests.java:315)
@@ -2379,7 +2379,7 @@ Caused by: java.lang.NullPointerException: Cannot invoke &quot;ab2.PDA.setInputC
 	... 86 more
 </failure>
   </testcase>
-  <testcase name="testPDATransitionStackReadCharNotValid()" classname="ab2.Ab2Tests" time="0.0">
+  <testcase name="testPDATransitionStackReadCharNotValid()" classname="ab2.Ab2Tests" time="0.001">
     <failure message="org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalArgumentException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IllegalArgumentException&gt; but was: &lt;java.lang.NullPointerException&gt;
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
 	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
