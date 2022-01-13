@@ -1,5 +1,6 @@
 package ab2.impl.Nachnamen;
 
+import ab2.Ab2;
 import ab2.PDA;
 
 import java.util.ArrayList;
@@ -26,6 +27,71 @@ public class PushDownAutomaton implements PDA {
         this.startSymbol = startSymbol;
         this.rules = rules;
         this.transitions = new HashSet<>();
+        setupPDAFromCFG();
+    }
+
+    private void setupPDAFromCFG() {
+        // Set initial and main state
+        this.setNumStates(2);
+        int mainState = 1;
+        this.setInitialState(0);
+        Set<Character> stackAlphabet = new HashSet<>();
+        Set<Character> inputAlphabet = new HashSet<>();
+
+
+        for (String rule : rules) {
+            // Split the rules
+            String[] leftAndRightSide = rule.split(Ab2.CFG_DELIMITER1, -1);
+            String leftSide = leftAndRightSide[0];
+            String[] rightSide = leftAndRightSide[1].split("\\|", -1);
+
+            // Get Alphabets
+            for (String s: rightSide) {
+                for (int i = 0; i < s.length(); i++) {
+                    if (Character.isLowerCase(s.charAt(i))){
+                        inputAlphabet.add(s.charAt(i));
+                    }
+                    stackAlphabet.add(s.charAt(i));
+                }
+            }
+            this.setInputChars(inputAlphabet);
+            this.setStackChars(stackAlphabet);
+
+            // Get Transitions
+            for (String rightSideRule : rightSide) {
+                if (rightSideRule.length() == 1) {
+                    this.addTransition(mainState,null, leftSide.charAt(0), rightSideRule.charAt(0), mainState);
+                }
+                else {
+                    for (int i = rightSideRule.length() - 1; i >= 0; i--) {
+                        if (i == rightSideRule.length() - 1) {
+                            this.setNumStates(this.numStates + 1);
+                            this.addTransition(mainState, null, leftSide.charAt(0), rightSideRule.charAt(i) , this.numStates - 1);
+
+                        }
+                        else if (i == 0){
+                            this.addTransition(this.numStates - 1, null, null, rightSideRule.charAt(i), mainState);
+                        }
+                        else {
+                            this.setNumStates(this.numStates + 1);
+                            this.addTransition(this.numStates - 2, null, null, rightSideRule.charAt(i), this.numStates - 1);
+
+                        }
+                    }
+                }
+            }
+
+            // Set Start Transition
+            this.addTransition(0,null,null, this.startSymbol, mainState);
+
+            // Set Transitions to empty stack
+            for (Character c : inputAlphabet) {
+                this.addTransition(mainState, c, c, null,  mainState);
+            }
+
+            // Set Accepting State
+            this.setAcceptingState(Set.of(mainState));
+        }
     }
 
     @Override
@@ -115,7 +181,7 @@ public class PushDownAutomaton implements PDA {
         }
 
         for (Transition transition : this.transitions) {
-            if (transition.getFromState() == currentState && (transition.getCharReadTape() == null || transition.getCharReadTape() == input.charAt(0)) && ((stack.size() > 0 && transition.getCharReadStack() == stack.get(stack.size() - 1)) || transition.getCharReadStack() == null)) {
+            if (transition.getFromState() == currentState && (transition.getCharReadTape() == null || (!input.equals("") && transition.getCharReadTape() == input.charAt(0))) && ((stack.size() > 0 && transition.getCharReadStack() == stack.get(stack.size() - 1)) || transition.getCharReadStack() == null)) {
                 List<Character> tempStack = new ArrayList<>(stack);
                 if (transition.getCharReadStack() != null) tempStack.remove(tempStack.size() - 1);
                 if (transition.getCharWriteStack() != null) tempStack.add(transition.getCharWriteStack());
@@ -135,7 +201,7 @@ public class PushDownAutomaton implements PDA {
         if (!((PushDownAutomaton) pda).alphabetAndNumberOfStatesAreNotNull()) {
             throw new IllegalArgumentException("One or more of the following is not set: numStates, inputAlphabet, stackAlphabet.");
         }
-        Set<Integer> newAcceptingStates = this.acceptingStates;
+        Set<Integer> newAcceptingStates = new HashSet<>();
         Set<Character> newInputAlpha = this.inputAlphabet;
         Set<Character> newStackAlpha = this.stackAlphabet;
 

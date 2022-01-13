@@ -449,7 +449,7 @@ public class Ab2Tests {
 	assertTrue(pda.accepts("aaa"));
 	assertTrue(pda.accepts("abcba"));
 
-	assertTrue(pda.accepts("")); // was assertFalse, but that wouldn't make sense...
+	assertFalse(pda.accepts(""));
 	assertFalse(pda.accepts("cc"));
 
 	pdaPunkte += 1;
